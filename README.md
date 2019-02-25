@@ -10,3 +10,20 @@ Project is based on analysing the data coming from a website.
 6.  Then log into it with $vagrant ssh.
 7. To build the reporting tool, you'll need to load the site's data into your local database.
 8. To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
+
+
+<h3>The database includes three tables:</h3>
+
+1.The authors table includes information about the authors of articles.
+2.The articles table includes the articles themselves.
+3.The log table includes one entry for each time a user has accessed the site.
+
+<h3>Views Created</h3>
+
+create view vw_log as select id, path from log where path != '/' and status = '200 OK'
+update vw_log set path = replace(path,'/article/','');
+create view vw_article as select path, count(*) as seen from vw_log group by path order by count(*);
+
+create view vw_top_authors as select articles.author, vw_log.path from articles inner join vw_log on articles.slug = vw_log.path;
+
+create view vw_percent as select vw_total_req.date, cast((vw_error.count*1.0/vw_total_req.count)*100.0 as decimal(10,3)) as Percent from vw_total_req inner join vw_error on vw_total_req.date = vw_error.date;
