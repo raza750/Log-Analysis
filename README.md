@@ -8,3 +8,5 @@ Project is based on analysing the data coming from a website.
 4. The file inside is called newsdata.sql. Put this file into the vagrant directory.
 5. Launch vagrant using command $vagrant up
 6.  Then log into it with $vagrant ssh.
+7. To build the reporting tool, you'll need to load the site's data into your local database.
+8. To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
