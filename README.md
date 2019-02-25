@@ -26,6 +26,8 @@ create view vw_article as select path, count(*) as seen from vw_log group by pat
 
 create view vw_top_authors as select articles.author, vw_log.path from articles inner join vw_log on articles.slug = vw_log.path; <br/>
 
+create view vw_total_req as select count(*), date(time) from log group by date(time);<br/>
+create view vw_error as select count(*), date(time) from log where status != '200 OK' group by date(time);<br/>
 create view vw_percent as select vw_total_req.date, cast((vw_error.count*1.0/vw_total_req.count)*100.0 as decimal(10,3)) as Percent from vw_total_req inner join vw_error on vw_total_req.date = vw_error.date; <br/>
 
 <h3>Run the program $ python log_analysis.py</h3>
