@@ -14,18 +14,18 @@ Project is based on analysing the data coming from a website.
 
 <h3>The database includes three tables:</h3>
 
-1.The authors table includes information about the authors of articles.
-2.The articles table includes the articles themselves.
-3.The log table includes one entry for each time a user has accessed the site.
+1.The authors table includes information about the authors of articles.<br/>
+2.The articles table includes the articles themselves.<br/>
+3.The log table includes one entry for each time a user has accessed the site.<br/>
 
 <h3>Views Created</h3>
 
-create view vw_log as select id, path from log where path != '/' and status = '200 OK'
-update vw_log set path = replace(path,'/article/','');
-create view vw_article as select path, count(*) as seen from vw_log group by path order by count(*);
+create view vw_log as select id, path from log where path != '/' and status = '200 OK'; <br/>
+update vw_log set path = replace(path,'/article/',''); <br/>
+create view vw_article as select path, count(*) as seen from vw_log group by path order by count(*); <br/>
 
-create view vw_top_authors as select articles.author, vw_log.path from articles inner join vw_log on articles.slug = vw_log.path;
+create view vw_top_authors as select articles.author, vw_log.path from articles inner join vw_log on articles.slug = vw_log.path; <br/>
 
-create view vw_percent as select vw_total_req.date, cast((vw_error.count*1.0/vw_total_req.count)*100.0 as decimal(10,3)) as Percent from vw_total_req inner join vw_error on vw_total_req.date = vw_error.date;
+create view vw_percent as select vw_total_req.date, cast((vw_error.count*1.0/vw_total_req.count)*100.0 as decimal(10,3)) as Percent from vw_total_req inner join vw_error on vw_total_req.date = vw_error.date; <br/>
 
 <h3>Run the program $ python log_analysis.py</h3>
