@@ -6,7 +6,7 @@ Project is based on analysing the data coming from a website.
 2. Download the data from <a href="https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip">Here</a>
 3. You will need to unzip this file after downloading it.
 4. The file inside is called newsdata.sql. Put this file into the vagrant directory.
-5. Launch vagrant using command $vagrant up
+5. Launch vagrant using command $vagrant up. <a href="https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfile">Vagrant File</a>
 6.  Then log into it with $vagrant ssh.
 7. To build the reporting tool, you'll need to load the site's data into your local database.
 8. To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
@@ -18,7 +18,7 @@ Project is based on analysing the data coming from a website.
 2.The articles table includes the articles themselves.<br/>
 3.The log table includes one entry for each time a user has accessed the site.<br/>
 
-<h3>Views Created</h3>
+<h3>Create Following Views:</h3>
 
 create view vw_log as select id, path from log where path != '/' and status = '200 OK'; <br/>
 update vw_log set path = replace(path,'/article/',''); <br/>
